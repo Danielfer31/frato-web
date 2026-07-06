@@ -1,4 +1,6 @@
 ---
+import { assetPath } from "~/utils/paths";
+
 const brandFiles = [
   "01_agape.png",
   "02_robleb.png",
@@ -56,7 +58,7 @@ const track = [...brandFiles, ...brandFiles];
     <div class="brand-marquee__track">
       {track.map((file) => (
         <div class="brand-marquee__item">
-          <img src={`/assets/brands/${file}`} alt={altFromFile(file)} loading="lazy" />
+          <img src={assetPath(`/assets/brands/${file}`)} alt={altFromFile(file)} loading="lazy" />
         </div>
       ))}
     </div>

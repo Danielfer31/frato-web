@@ -1,3 +1,5 @@
+import { assetPath } from "~/utils/paths";
+
 export type InstagramLink = {
   label: string;
   url: string;
@@ -52,7 +54,7 @@ export const featuredCases: CaseStudy[] = [
       "Espacios para foto de producto, video cover y detras de camaras.",
       "Resultados pendientes por confirmar antes de publicar metricas.",
     ],
-    logo: "/assets/brands/02_robleb.png",
+    logo: assetPath("/assets/brands/02_robleb.png"),
     instagramLinks: [
       {
         label: "La Casa Roble",
@@ -66,7 +68,7 @@ export const featuredCases: CaseStudy[] = [
       },
     ],
     assetSlots: [
-      { label: "Logo autorizado", kind: "logo", status: "authorized", image: "/assets/brands/02_robleb.png" },
+      { label: "Logo autorizado", kind: "logo", status: "authorized", image: assetPath("/assets/brands/02_robleb.png") },
       { label: "Foto de producto", kind: "photo", status: "pending" },
       { label: "Portada reel", kind: "reel", status: "curated" },
       { label: "Testimonio", kind: "testimonial", status: "pending" },
@@ -93,7 +95,7 @@ export const featuredCases: CaseStudy[] = [
       "Pendiente captura o autorizacion de publicaciones especificas.",
       "Galeria lista para fotos de equipo, producto y experiencia.",
     ],
-    logo: "/assets/brands/01_agape.png",
+    logo: assetPath("/assets/brands/01_agape.png"),
     instagramLinks: [
       {
         label: "Si nos preguntan que es cocina",
@@ -112,7 +114,7 @@ export const featuredCases: CaseStudy[] = [
       },
     ],
     assetSlots: [
-      { label: "Logo autorizado", kind: "logo", status: "authorized", image: "/assets/brands/01_agape.png" },
+      { label: "Logo autorizado", kind: "logo", status: "authorized", image: assetPath("/assets/brands/01_agape.png") },
       { label: "Foto de experiencia", kind: "photo", status: "pending" },
       { label: "Historia destacada", kind: "story", status: "pending" },
       { label: "Resultado confirmado", kind: "metric", status: "pending" },
@@ -139,7 +141,7 @@ export const featuredCases: CaseStudy[] = [
       "Espacio para carrusel de piezas y escenas de rodaje.",
       "Metricas pendientes por confirmar.",
     ],
-    logo: "/assets/brands/27_mandato.png",
+    logo: assetPath("/assets/brands/27_mandato.png"),
     instagramLinks: [
       {
         label: "Nada fue casualidad",
@@ -153,7 +155,7 @@ export const featuredCases: CaseStudy[] = [
       },
     ],
     assetSlots: [
-      { label: "Logo autorizado", kind: "logo", status: "authorized", image: "/assets/brands/27_mandato.png" },
+      { label: "Logo autorizado", kind: "logo", status: "authorized", image: assetPath("/assets/brands/27_mandato.png") },
       { label: "Portada reel", kind: "reel", status: "curated" },
       { label: "Foto de campana", kind: "photo", status: "pending" },
       { label: "Testimonio", kind: "testimonial", status: "pending" },
@@ -180,7 +182,7 @@ export const featuredCases: CaseStudy[] = [
       "Posts y reels pendientes por curar con el usuario.",
       "Espacios de media preparados sin inventar trabajo.",
     ],
-    logo: "/assets/brands/26_caribu.png",
+    logo: assetPath("/assets/brands/26_caribu.png"),
     instagramLinks: [
       {
         label: "Material por curar",
@@ -189,7 +191,7 @@ export const featuredCases: CaseStudy[] = [
       },
     ],
     assetSlots: [
-      { label: "Logo autorizado", kind: "logo", status: "authorized", image: "/assets/brands/26_caribu.png" },
+      { label: "Logo autorizado", kind: "logo", status: "authorized", image: assetPath("/assets/brands/26_caribu.png") },
       { label: "Foto de producto", kind: "photo", status: "pending" },
       { label: "Reel destacado", kind: "reel", status: "pending" },
       { label: "Resultado confirmado", kind: "metric", status: "pending" },
@@ -216,7 +218,7 @@ export const featuredCases: CaseStudy[] = [
       "Espacios para antes/despues, video cover y procesos.",
       "Resultados pendientes por confirmar antes de publicarse.",
     ],
-    logo: "/assets/brands/22_koncres.png",
+    logo: assetPath("/assets/brands/22_koncres.png"),
     instagramLinks: [
       {
         label: "Procesos Koncres",
@@ -230,7 +232,7 @@ export const featuredCases: CaseStudy[] = [
       },
     ],
     assetSlots: [
-      { label: "Logo autorizado", kind: "logo", status: "authorized", image: "/assets/brands/22_koncres.png" },
+      { label: "Logo autorizado", kind: "logo", status: "authorized", image: assetPath("/assets/brands/22_koncres.png") },
       { label: "Foto de proceso", kind: "photo", status: "pending" },
       { label: "Antes y despues", kind: "photo", status: "pending" },
       { label: "Portada reel", kind: "reel", status: "curated" },
@@ -257,7 +259,7 @@ export const featuredCases: CaseStudy[] = [
       "Material visual pendiente por recibir o curar.",
       "Galeria lista para piezas tecnicas y humanas.",
     ],
-    logo: "/assets/brands/07_cda_santa_cruz.png",
+    logo: assetPath("/assets/brands/07_cda_santa_cruz.png"),
     instagramLinks: [
       {
         label: "Entre motores y creatividad",
@@ -271,7 +273,7 @@ export const featuredCases: CaseStudy[] = [
       },
     ],
     assetSlots: [
-      { label: "Logo autorizado", kind: "logo", status: "authorized", image: "/assets/brands/07_cda_santa_cruz.png" },
+      { label: "Logo autorizado", kind: "logo", status: "authorized", image: assetPath("/assets/brands/07_cda_santa_cruz.png") },
       { label: "Foto de sede", kind: "photo", status: "pending" },
       { label: "Proceso tecnico", kind: "photo", status: "pending" },
       { label: "Testimonio", kind: "testimonial", status: "pending" },

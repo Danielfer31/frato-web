@@ -2,6 +2,7 @@
 import BrandLogo from "~/components/BrandLogo.astro";
 import CrewGrid from "~/components/CrewGrid.astro";
 import MarketingLayout from "~/layouts/MarketingLayout.astro";
+import { pagePath } from "~/utils/paths";
 
 export const prerender = true;
 
@@ -44,7 +45,7 @@ const principles = [
         <p class="eyeless-label">Sistema humano</p>
         <h2 class="headline">Equipo interno y red de aliados.</h2>
       </div>
-      <a class="btn btn-secondary" href="/crew">Ver crew</a>
+      <a class="btn btn-secondary" href={pagePath("/crew")}>Ver crew</a>
     </div>
     <div class="container">
       <CrewGrid />

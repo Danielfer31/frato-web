@@ -13,11 +13,7 @@ export function getStaticPaths() {
 }
 
 const { slug } = Astro.props;
-const caseStudy = getCaseBySlug(slug);
-
-if (!caseStudy) {
-  return Astro.redirect("/portafolio");
-}
+const caseStudy = getCaseBySlug(slug)!;
 ---
 
 <MarketingLayout title={`${caseStudy.name} - caso frato`}>

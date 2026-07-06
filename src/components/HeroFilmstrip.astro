@@ -1,6 +1,7 @@
 ---
 import { featuredCases } from "~/data/cases";
 import { getCaseMedia } from "~/data/caseMedia";
+import { pagePath } from "~/utils/paths";
 
 type Frame = {
   brand: string;
@@ -81,7 +82,7 @@ const realCount = frames.length;
         ) : (
           <a
             class:list={cls}
-            href={`/portafolio/${frame.slug}`}
+            href={pagePath(`/portafolio/${frame.slug}`)}
             aria-label={`Ver caso ${frame.brand}`}
             aria-hidden={isClone ? "true" : undefined}
             tabindex={isClone ? -1 : undefined}

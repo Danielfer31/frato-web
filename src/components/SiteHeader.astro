@@ -1,6 +1,7 @@
 ---
 import BrandLogo from "~/components/BrandLogo.astro";
 import SocialContactActions from "~/components/SocialContactActions.astro";
+import { pagePath } from "~/utils/paths";
 
 const navItems = [
   ["Inicio", "/"],
@@ -14,11 +15,11 @@ const navItems = [
 
 <header class="site-header" data-site-header>
   <div class="container header-inner">
-    <a class="brand" href="/" aria-label="frato inicio">
+    <a class="brand" href={pagePath("/")} aria-label="frato inicio">
       <BrandLogo />
     </a>
     <nav id="primary-nav" aria-label="Navegacion principal">
-      {navItems.map(([label, href]) => <a href={href}>{label}</a>)}
+      {navItems.map(([label, href]) => <a href={pagePath(href)}>{label}</a>)}
     </nav>
     <div class="header-actions">
       <SocialContactActions compact />

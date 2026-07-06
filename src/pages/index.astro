@@ -3,6 +3,7 @@ import BrandLogo from "~/components/BrandLogo.astro";
 import BrandMarquee from "~/components/BrandMarquee.astro";
 import SocialContactActions from "~/components/SocialContactActions.astro";
 import MarketingLayout from "~/layouts/MarketingLayout.astro";
+import { assetPath, pagePath } from "~/utils/paths";
 
 export const prerender = true;
 
@@ -13,7 +14,7 @@ export const prerender = true;
     <div class="home-video__frame">
       <video
         class="home-video__media"
-        src="/assets/video/frato-inicio.mp4"
+        src={assetPath("/assets/video/frato-inicio.mp4")}
         autoplay
         muted
         loop
@@ -34,8 +35,8 @@ export const prerender = true;
       </div>
 
       <div class="btn-row hero-lab__actions">
-        <a class="btn btn-primary" href="/contacto">Agendar reunion creativa</a>
-        <a class="btn btn-secondary" href="/servicios">Ver servicios</a>
+        <a class="btn btn-primary" href={pagePath("/contacto")}>Agendar reunion creativa</a>
+        <a class="btn btn-secondary" href={pagePath("/servicios")}>Ver servicios</a>
       </div>
 
     </div>

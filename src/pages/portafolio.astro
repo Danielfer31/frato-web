@@ -6,6 +6,7 @@ import MediaRail from "~/components/MediaRail.astro";
 import MarketingLayout from "~/layouts/MarketingLayout.astro";
 import { brandInventory } from "~/data/brandInventory";
 import { featuredCases } from "~/data/cases";
+import { pagePath } from "~/utils/paths";
 
 export const prerender = true;
 
@@ -67,7 +68,7 @@ const priorityBrands = brandInventory.filter((brand) => brand.priority);
             <p>{caseStudy.summary}</p>
           </div>
           <MediaRail caseStudy={caseStudy} compact />
-          <a class="btn btn-secondary" href={`/portafolio/${caseStudy.slug}`}>Abrir caso</a>
+          <a class="btn btn-secondary" href={pagePath(`/portafolio/${caseStudy.slug}`)}>Abrir caso</a>
         </article>
       ))}
     </div>

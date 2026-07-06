@@ -4,6 +4,7 @@ import SocialContactActions from "~/components/SocialContactActions.astro";
 import CurationBoard from "~/components/CurationBoard.astro";
 import type { CaseStudy } from "~/data/cases";
 import { getCaseMedia } from "~/data/caseMedia";
+import { pagePath } from "~/utils/paths";
 
 interface Props {
   caseStudy: CaseStudy;
@@ -18,7 +19,7 @@ const heroPhoto = media.find((m) => m.type === "photo")?.src;
   <section class="case-hero">
     <div class="container case-hero__grid">
       <div>
-        <a class="case-back" href="/portafolio">Volver al portafolio</a>
+        <a class="case-back" href={pagePath("/portafolio")}>Volver al portafolio</a>
         <h1>{caseStudy.name}</h1>
         <p>{caseStudy.summary}</p>
         <div class="case-hero__meta">

@@ -1,6 +1,7 @@
 ---
 import BrandLogo from "~/components/BrandLogo.astro";
 import SocialContactActions from "~/components/SocialContactActions.astro";
+import { pagePath } from "~/utils/paths";
 
 const year = new Date().getFullYear();
 ---
@@ -8,24 +9,24 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
-      <a class="footer-logo" href="/" aria-label="frato inicio">
+      <a class="footer-logo" href={pagePath("/")} aria-label="frato inicio">
         <BrandLogo />
       </a>
       <p>Monteria, Colombia. Hermandad creativa desde 2023.</p>
       <SocialContactActions compact />
     </div>
     <div class="footer-links">
-      <a href="/servicios">Servicios</a>
-      <a href="/portafolio">Portafolio</a>
-      <a href="/nosotros">Nosotros</a>
-      <a href="/crew">Crew</a>
-      <a href="/contacto">Contacto</a>
+      <a href={pagePath("/servicios")}>Servicios</a>
+      <a href={pagePath("/portafolio")}>Portafolio</a>
+      <a href={pagePath("/nosotros")}>Nosotros</a>
+      <a href={pagePath("/crew")}>Crew</a>
+      <a href={pagePath("/contacto")}>Contacto</a>
     </div>
     <div class="footer-small">
       <span>© {year} frato</span>
       <span>Logo oficial bloqueado al manual de marca.</span>
-      <a href="/legal/privacidad">Privacidad</a>
-      <a href="/legal/terminos">Terminos</a>
+      <a href={pagePath("/legal/privacidad")}>Privacidad</a>
+      <a href={pagePath("/legal/terminos")}>Terminos</a>
     </div>
   </div>
 </footer>

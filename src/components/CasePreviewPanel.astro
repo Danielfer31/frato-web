@@ -1,5 +1,6 @@
 ---
 import type { CaseStudy } from "~/data/cases";
+import { pagePath } from "~/utils/paths";
 
 interface Props {
   cases: CaseStudy[];
@@ -23,7 +24,7 @@ const { cases } = Astro.props;
     >
       <div class="case-preview__top">
         <span>{caseStudy.sector}</span>
-        <a href={`/portafolio/${caseStudy.slug}`}>Explorar caso</a>
+        <a href={pagePath(`/portafolio/${caseStudy.slug}`)}>Explorar caso</a>
       </div>
       <h3>{caseStudy.name}</h3>
       <p>{caseStudy.summary}</p>

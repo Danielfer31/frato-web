@@ -1,4 +1,6 @@
 ---
+import { assetPath } from "~/utils/paths";
+
 interface Props {
   variant?: "lockup" | "bulb";
   class?: string;
@@ -13,8 +15,8 @@ const {
 
 const src =
   variant === "bulb"
-    ? "/assets/brand/frato-isotipo-bombillo-dark.png"
-    : "/assets/brand/frato-logo-monocromo.png";
+    ? assetPath("/assets/brand/frato-isotipo-bombillo-dark.png")
+    : assetPath("/assets/brand/frato-logo-monocromo.png");
 ---
 
 <img class:list={["brand-logo-lock", className]} src={src} alt={alt} />
