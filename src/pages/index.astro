@@ -1,47 +1,10 @@
 ---
-import BrandCarousel from "~/components/BrandCarousel.astro";
 import BrandLogo from "~/components/BrandLogo.astro";
 import BrandMarquee from "~/components/BrandMarquee.astro";
-import CrewGrid from "~/components/CrewGrid.astro";
 import SocialContactActions from "~/components/SocialContactActions.astro";
 import MarketingLayout from "~/layouts/MarketingLayout.astro";
-import { featuredCases } from "~/data/cases";
-
-const campaigns = [
-  {
-    brand: "Roble",
-    sector: "Gastronomia",
-    title: "Reels de temporada y narrativa de cocina",
-    deliverables: ["Reels", "Foto producto", "Notion editorial"],
-  },
-  {
-    brand: "Caribu",
-    sector: "Hoteleria",
-    title: "Identidad audiovisual del hotel boutique",
-    deliverables: ["Video institucional", "Feed", "Guion"],
-  },
-  {
-    brand: "Mar Brasas",
-    sector: "Gastronomia",
-    title: "Lanzamiento de carta y experiencia parrilla",
-    deliverables: ["Campana Meta Ads", "Reels", "Pauta"],
-  },
-  {
-    brand: "Mandato",
-    sector: "Construccion",
-    title: "Storytelling de obra y ventas inmobiliarias",
-    deliverables: ["Video drone", "Casos", "Pauta"],
-  },
-];
 
 export const prerender = true;
-
-const principles = [
-  ["01", "Pensamos antes de producir", "La estrategia ordena cada decision visible antes de grabar, pautar o disenar."],
-  ["02", "Creamos narrativa, no relleno", "Cada pieza debe mover una historia, no solo llenar un calendario."],
-  ["03", "La organizacion tambien crea", "FEE, Notion y procesos claros hacen que la creatividad no dependa del caos."],
-  ["04", "Sabemos decir no", "Filtramos proyectos para cuidar la calidad del trabajo y la relacion con cada cliente."],
-];
 
 ---
 
@@ -67,112 +30,40 @@ const principles = [
     <div class="container hero-lab__stack">
       <div class="hero-lab__copy reveal-in">
         <h1 class="display">Narrativa estrategica para marcas con vision.</h1>
-        <p class="lead">No trabajamos con marcas. Trabajamos con personas.</p>
+        <p class="lead">Somos una agencia especializada de marketing con mas de tres anos de experiencia en el mercado y mas de treinta marcas trabajadas.</p>
       </div>
 
       <div class="btn-row hero-lab__actions">
         <a class="btn btn-primary" href="/contacto">Agendar reunion creativa</a>
-        <a class="btn btn-secondary" href="#marcas-aliadas">Conoce nuestras marcas aliadas</a>
+        <a class="btn btn-secondary" href="/servicios">Ver servicios</a>
       </div>
 
     </div>
 
     <div class="container hero-lab__proof">
-      <span>+30 marcas en la matriz</span>
-      <span>6 casos priorizados</span>
-      <span>WhatsApp e Instagram conectados</span>
+      <span>+3 anos de experiencia</span>
+      <span>+30 marcas trabajadas</span>
+      <span>Estrategia, contenido y produccion</span>
     </div>
   </section>
 
   <section class="section-tight manifesto">
     <div class="container manifesto__inner">
-      <h2 class="headline">Narrativa estrategica para marcas con vision</h2>
+      <h2 class="headline">Agencia focal en narrativa estrategica para marcas con vision.</h2>
+    </div>
+  </section>
+
+  <section class="section-tight agency-note">
+    <div class="container agency-note__inner">
+      <p class="eyeless-label">Lo principal</p>
+      <h2 class="headline">Marketing que entiende la marca antes de producir contenido.</h2>
+      <p class="lead">En frato convertimos ideas, productos y experiencias en historias con direccion. Acompanamos marcas que necesitan claridad, criterio y una presencia digital con sentido.</p>
     </div>
   </section>
 
   <div id="marcas-aliadas">
     <BrandMarquee />
   </div>
-
-  <section class="section-tight campaigns" id="campanas">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="eyeless-label">Campanas trabajadas</p>
-          <h2 class="headline">Producciones reales con marcas reales.</h2>
-        </div>
-        <a class="btn btn-secondary" href="/portafolio">Ver portafolio completo</a>
-      </div>
-      <div class="campaign-grid">
-        {campaigns.map((c) => (
-          <article class="campaign-card">
-            <header>
-              <span class="campaign-sector">{c.sector}</span>
-              <strong class="campaign-brand">{c.brand}</strong>
-            </header>
-            <p class="campaign-title">{c.title}</p>
-            <ul class="campaign-tags">
-              {c.deliverables.map((d) => <li>{d}</li>)}
-            </ul>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <BrandCarousel cases={featuredCases} />
-
-  <section class="section-tight">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="headline">Principios que ordenan el trabajo.</h2>
-        <a class="btn btn-secondary" href="/nosotros">Leer filosofia</a>
-      </div>
-      <div class="rule-list">
-        {principles.map(([number, title, body]) => (
-          <article class="rule-item">
-            <strong>{number}</strong>
-            <div>
-              <h3>{title}</h3>
-              <p>{body}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section services-band">
-    <div class="container services-lab">
-      <div>
-        <p class="eyeless-label">Fase Inicial Estrategica</p>
-        <h2 class="headline">Todo empieza con 30 dias de claridad.</h2>
-        <p class="lead">FEE es la entrada para clientes nuevos: diagnostico, target, narrativa, pilares, portal Notion, estrategia tentativa y primeras grabaciones.</p>
-      </div>
-      <div class="fee-panel">
-        <span>$800.000 COP</span>
-        <strong>Pago unico anticipado</strong>
-        <ol>
-          <li><b>Dias 1-15</b> Estructuracion de marca y narrativa.</li>
-          <li><b>Dias 16-30</b> Produccion inicial, banco de contenido y revision.</li>
-        </ol>
-        <a class="btn btn-primary" href="/servicios#fee">Ver servicios</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-tight crew-strip">
-    <div class="container section-head">
-      <div>
-        <p class="eyeless-label">Crew y red</p>
-        <h2 class="headline">La confianza tambien tiene rostro.</h2>
-      </div>
-      <a class="btn btn-secondary" href="/crew">Conocer el crew</a>
-    </div>
-    <div class="container">
-      <CrewGrid />
-    </div>
-  </section>
 
   <section class="section final-cta">
     <div class="container final-cta__panel">
@@ -303,73 +194,19 @@ const principles = [
     justify-content: center;
   }
 
-  .campaigns {
+  .agency-note {
     background: var(--frato-bg);
   }
 
-  .campaign-grid {
+  .agency-note__inner {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    margin-top: clamp(22px, 3vw, 36px);
+    gap: 18px;
+    max-width: 900px;
   }
 
-  .campaign-card {
-    display: grid;
-    gap: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    padding: 20px;
-    background:
-      radial-gradient(circle at 100% 0%, rgba(230, 95, 64, 0.08), transparent 60%),
-      rgba(11, 24, 48, 0.55);
-    transition: border-color 220ms ease, transform 220ms ease;
-  }
-
-  .campaign-card:hover {
-    border-color: rgba(230, 95, 64, 0.45);
-    transform: translateY(-2px);
-  }
-
-  .campaign-card header {
-    display: grid;
-    gap: 4px;
-  }
-
-  .campaign-sector {
-    color: var(--frato-orange);
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .campaign-brand {
-    color: rgba(255, 255, 255, 0.94);
-    font-size: 1.4rem;
-  }
-
-  .campaign-title {
+  .agency-note__inner h2,
+  .agency-note__inner p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.78);
-    line-height: 1.5;
-  }
-
-  .campaign-tags {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .campaign-tags li {
-    font-size: 0.74rem;
-    padding: 4px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 999px;
-    color: rgba(255, 255, 255, 0.7);
   }
 
   .hero-lab__proof {
@@ -400,57 +237,6 @@ const principles = [
     margin: 0;
     color: inherit;
     text-align: center;
-  }
-
-  .services-band {
-    background: var(--frato-bg);
-  }
-
-  .services-lab {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
-    gap: clamp(30px, 7vw, 90px);
-    align-items: start;
-  }
-
-  .services-lab h2,
-  .services-lab p {
-    margin: 0;
-  }
-
-  .fee-panel {
-    display: grid;
-    gap: 22px;
-    border-left: 1px solid rgba(230, 95, 64, 0.58);
-    padding: 8px 0 8px 34px;
-  }
-
-  .fee-panel span {
-    color: var(--frato-orange);
-    font-size: clamp(2.5rem, 5vw, 4.8rem);
-    font-weight: 850;
-    line-height: 0.9;
-  }
-
-  .fee-panel strong {
-    color: rgba(255, 255, 255, 0.84);
-  }
-
-  .fee-panel ol {
-    display: grid;
-    gap: 14px;
-    margin: 0;
-    padding-left: 20px;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.55;
-  }
-
-  .fee-panel .btn {
-    justify-self: start;
-  }
-
-  .crew-strip {
-    background: var(--frato-bg);
   }
 
   .final-cta {
@@ -486,15 +272,8 @@ const principles = [
     }
 
     .hero-lab__grid,
-    .services-lab,
     .hero-lab__proof {
       grid-template-columns: 1fr;
-    }
-
-    .fee-panel {
-      border-left: 0;
-      border-top: 1px solid rgba(230, 95, 64, 0.58);
-      padding: 28px 0 0;
     }
   }
 </style>

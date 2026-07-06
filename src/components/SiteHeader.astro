@@ -22,56 +22,9 @@ const navItems = [
     </nav>
     <div class="header-actions">
       <SocialContactActions compact />
-      <button
-        class="nav-toggle"
-        type="button"
-        aria-label="Abrir menu"
-        aria-controls="primary-nav"
-        aria-expanded="false"
-        data-nav-toggle
-      >
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-      </button>
     </div>
   </div>
 </header>
-
-<script>
-  const setup = () => {
-    const header = document.querySelector<HTMLElement>("[data-site-header]");
-    const toggle = document.querySelector<HTMLButtonElement>("[data-nav-toggle]");
-    const nav = document.getElementById("primary-nav");
-    if (!header || !toggle || !nav) return;
-
-    const close = () => {
-      header.classList.remove("is-nav-open");
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.setAttribute("aria-label", "Abrir menu");
-    };
-    const open = () => {
-      header.classList.add("is-nav-open");
-      toggle.setAttribute("aria-expanded", "true");
-      toggle.setAttribute("aria-label", "Cerrar menu");
-    };
-
-    toggle.addEventListener("click", () => {
-      header.classList.contains("is-nav-open") ? close() : open();
-    });
-    // Close when a nav link is tapped or Escape pressed.
-    nav.addEventListener("click", (e) => {
-      if ((e.target as HTMLElement).closest("a")) close();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
-    });
-  };
-
-  setup();
-  // Re-bind after Astro View Transitions swaps the DOM.
-  document.addEventListener("astro:after-swap", setup);
-</script>
 
 <style>
   .site-header {
@@ -79,27 +32,33 @@ const navItems = [
     top: 0;
     z-index: 20;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(5, 15, 35, 0.86);
+    background: rgba(5, 15, 35, 0.8);
     backdrop-filter: blur(18px);
   }
 
   .header-inner {
-    display: flex;
-    min-height: 76px;
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr) 190px;
+    min-height: 82px;
     align-items: center;
-    justify-content: space-between;
     gap: 24px;
   }
 
   .brand {
-    display: inline-flex;
-    width: 128px;
+    display: grid;
+    width: 148px;
+    min-height: 50px;
     align-items: center;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(7, 20, 39, 0.72);
+    justify-self: start;
   }
 
   nav {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: clamp(14px, 2.4vw, 28px);
     color: rgba(255, 255, 255, 0.72);
     font-size: 0.9rem;
@@ -116,85 +75,47 @@ const navItems = [
 
   .header-actions {
     display: flex;
-    align-items: center;
-    gap: 14px;
+    justify-content: end;
   }
 
-  /* Hamburger — hidden on desktop. */
-  .nav-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
+  .header-actions :global(.social-actions) {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .header-actions :global(.social-actions--compact .social-action) {
+    min-height: 42px;
     width: 42px;
-    height: 42px;
+    justify-content: center;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.04);
-    cursor: pointer;
-  }
-
-  .nav-toggle__bar {
-    display: block;
-    width: 18px;
-    height: 2px;
-    margin: 0 auto;
-    border-radius: 2px;
-    background: var(--frato-white);
-    transition: transform 200ms ease, opacity 200ms ease;
+    border-radius: 8px;
   }
 
   @media (max-width: 930px) {
-    .nav-toggle {
-      display: flex;
+    .header-inner {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding-block: 12px;
     }
 
     .brand {
       width: 108px;
+      height: auto;
+      justify-self: center;
     }
 
-    /* Nav becomes a dropdown panel under the header. */
+    .header-actions {
+      justify-content: center;
+    }
+
     nav {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      padding: 8px 0;
-      background: rgba(5, 15, 35, 0.98);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      transform: translateY(-8px);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
-    }
-
-    .site-header.is-nav-open nav {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      font-size: 0.84rem;
     }
 
     nav a {
-      padding: 14px clamp(20px, 6vw, 48px);
-      font-size: 1.05rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .site-header.is-nav-open .nav-toggle__bar:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-    .site-header.is-nav-open .nav-toggle__bar:nth-child(2) {
-      opacity: 0;
-    }
-    .site-header.is-nav-open .nav-toggle__bar:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
+      padding: 4px 0;
     }
   }
 </style>
