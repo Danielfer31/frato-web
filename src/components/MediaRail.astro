@@ -1,0 +1,156 @@
+---
+import type { CaseStudy } from "~/data/cases";
+
+interface Props {
+  caseStudy: CaseStudy;
+  compact?: boolean;
+}
+
+const { caseStudy, compact = false } = Astro.props;
+
+const kindLabel = {
+  logo: "Identidad",
+  photo: "Foto",
+  reel: "Reel",
+  story: "Historia",
+  testimonial: "Testimonio",
+  metric: "Resultado",
+};
+
+const statusLabel = {
+  pending: "Pendiente",
+  curated: "Curado",
+  authorized: "Autorizado",
+};
+---
+
+<div class:list={["media-rail", { "media-rail--compact": compact }]}>
+  {caseStudy.assetSlots.map((slot, index) => (
+    <article class:list={["media-slot", { "media-slot--filled": slot.image }]}>
+      <div class:list={["media-slot__frame", { "media-slot__frame--image": slot.image }]}>
+        {slot.image ? (
+          <img src={slot.image} alt={slot.label} loading="lazy" />
+        ) : (
+          <>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <small>{kindLabel[slot.kind]}</small>
+          </>
+        )}
+      </div>
+      <div>
+        <strong>{slot.label}</strong>
+        <p>{slot.image ? "Logo cargado" : slot.status === "curated" ? "Curado desde Instagram" : "Pendiente de material aprobado"}</p>
+        <span class:list={["media-slot__status", `is-${slot.status}`]}>{statusLabel[slot.status]}</span>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .media-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .media-slot {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .media-slot__frame {
+    aspect-ratio: 4 / 5;
+    display: grid;
+    place-items: end start;
+    border: 1px dashed rgba(255, 255, 255, 0.24);
+    border-radius: 8px;
+    padding: 12px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.015)),
+      rgba(11, 24, 48, 0.82);
+  }
+
+  .media-slot__frame span,
+  .media-slot__frame small {
+    color: var(--frato-orange);
+    font-size: 0.76rem;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+  }
+
+  .media-slot__frame small {
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0;
+  }
+
+  .media-slot__frame--image {
+    place-items: center;
+    border-style: solid;
+    border-color: rgba(125, 164, 255, 0.35);
+    padding: 18px;
+  }
+
+  .media-slot__frame--image img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    mix-blend-mode: screen;
+  }
+
+  .media-slot strong {
+    display: block;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.94rem;
+    line-height: 1.2;
+  }
+
+  .media-slot p {
+    margin: 6px 0 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .media-slot__status {
+    display: inline-flex;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    padding: 5px 9px;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.7rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .media-slot__status.is-curated {
+    border-color: rgba(230, 95, 64, 0.45);
+    color: var(--frato-orange);
+  }
+
+  .media-slot__status.is-authorized {
+    border-color: rgba(125, 164, 255, 0.5);
+    color: #9fbbff;
+  }
+
+  .media-rail--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 860px) {
+    .media-rail {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 520px) {
+    .media-rail,
+    .media-rail--compact {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

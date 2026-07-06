@@ -1,0 +1,150 @@
+---
+const brandFiles = [
+  "01_agape.png",
+  "02_robleb.png",
+  "03_pro_padel.png",
+  "04_era_optica.png",
+  "05_el_palacio_del_adorno.png",
+  "06_gassata.png",
+  "07_cda_santa_cruz.png",
+  "08_giovanna_maroso.png",
+  "09_trip_burger.png",
+  "10_pizzas_mil.png",
+  "11_cvco_colombia_vape_company.png",
+  "12_furtivo_taqueria.png",
+  "13_beer_cave.png",
+  "14_x_logo.png",
+  "15_nohemi_haddad.png",
+  "16_mar_brasas.png",
+  "17_perfumarte.png",
+  "18_berrocal.png",
+  "19_dragon_rojo.png",
+  "20_le_bistrot.png",
+  "21_campo.png",
+  "22_koncres.png",
+  "23_green_padel_sport.png",
+  "24_senderos_artisan_bakery.png",
+  "25_masai.png",
+  "26_caribu.png",
+  "27_mandato.png",
+  "28_el_tambo.png",
+  "29_v_logo.png",
+  "30_caf_unity.png",
+  "31_movitech.png",
+  "32_bulldog_logo.png",
+  "33_gula.png",
+  "34_food_n_out.png",
+  "35_luz_z.png",
+  "36_aia_parrilla.png",
+];
+
+const altFromFile = (filename: string) => {
+  const base = filename.replace(/^[0-9]+_/, "").replace(/\.png$/, "");
+  return base.replace(/_/g, " ");
+};
+
+const track = [...brandFiles, ...brandFiles];
+---
+
+<section class="brand-marquee" aria-label="Marcas con las que ha trabajado frato">
+  <div class="container brand-marquee__head">
+    <p class="eyeless-label">Marcas aliadas</p>
+    <h2 class="headline">+30 marcas confiaron en frato.</h2>
+  </div>
+
+  <div class="brand-marquee__viewport" aria-hidden="true">
+    <div class="brand-marquee__track">
+      {track.map((file) => (
+        <div class="brand-marquee__item">
+          <img src={`/assets/brands/${file}`} alt={altFromFile(file)} loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .brand-marquee {
+    padding: clamp(40px, 6vw, 70px) 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+    overflow: hidden;
+  }
+
+  .brand-marquee__head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: clamp(22px, 3vw, 36px);
+  }
+
+  .brand-marquee__head h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+  }
+
+  .brand-marquee__viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      black 8%,
+      black 92%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      black 8%,
+      black 92%,
+      transparent 100%
+    );
+  }
+
+  .brand-marquee__track {
+    display: flex;
+    gap: clamp(28px, 4vw, 56px);
+    width: max-content;
+    animation: marquee-scroll 45s linear infinite !important;
+    animation-iteration-count: infinite !important;
+    will-change: transform;
+  }
+
+  .brand-marquee:hover .brand-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .brand-marquee__item {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(160px, 17vw, 240px);
+    height: clamp(120px, 13vw, 170px);
+  }
+
+  .brand-marquee__item img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.95;
+    mix-blend-mode: screen;
+    transition: opacity 220ms ease;
+  }
+
+  .brand-marquee__item img:hover {
+    opacity: 1;
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+</style>

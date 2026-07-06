@@ -1,0 +1,129 @@
+---
+import BrandLogo from "~/components/BrandLogo.astro";
+import CrewGrid from "~/components/CrewGrid.astro";
+import MarketingLayout from "~/layouts/MarketingLayout.astro";
+
+export const prerender = true;
+
+const principles = [
+  "No trabajamos con marcas, trabajamos con personas.",
+  "Creamos narrativa, no contenido.",
+  "Sentido por encima de estetica.",
+  "La transparencia genera confianza.",
+];
+---
+
+<MarketingLayout title="Nosotros - frato">
+  <section class="about-hero">
+    <div class="container about-hero__grid">
+      <div>
+        <h1 class="headline">frato no empezo de cero. Empezo de nuevo.</h1>
+        <p class="lead">Nacimos como colectivo creativo y evolucionamos hacia una agencia boutique con direccion clara, metodologia y una idea central: trabajar con personas, no con marcas abstractas.</p>
+      </div>
+      <div class="about-logo-panel">
+        <BrandLogo />
+        <p>La identidad visual del sitio queda bloqueada al manual: logo oficial, bombillo oficial, paleta oficial.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container principle-grid">
+      {principles.map((principle, index) => (
+        <article>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <p>{principle}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container section-head">
+      <div>
+        <p class="eyeless-label">Sistema humano</p>
+        <h2 class="headline">Equipo interno y red de aliados.</h2>
+      </div>
+      <a class="btn btn-secondary" href="/crew">Ver crew</a>
+    </div>
+    <div class="container">
+      <CrewGrid />
+    </div>
+  </section>
+</MarketingLayout>
+
+<style>
+  .about-hero {
+    min-height: calc(88vh - 76px);
+    display: grid;
+    align-items: end;
+    padding: clamp(58px, 8vw, 110px) 0;
+  }
+
+  .about-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.58fr);
+    gap: clamp(30px, 7vw, 90px);
+    align-items: end;
+  }
+
+  .about-hero h1,
+  .about-hero p {
+    margin: 0;
+  }
+
+  .about-logo-panel {
+    display: grid;
+    gap: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    padding: clamp(22px, 4vw, 34px);
+    background: rgba(11, 24, 48, 0.72);
+  }
+
+  .about-logo-panel img {
+    width: min(260px, 100%);
+  }
+
+  .about-logo-panel p {
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.6;
+  }
+
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .principle-grid article {
+    min-height: 260px;
+    display: grid;
+    align-content: end;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    padding: 20px;
+    background: rgba(11, 24, 48, 0.72);
+  }
+
+  .principle-grid span {
+    color: var(--frato-orange);
+    font-size: 0.74rem;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+  }
+
+  .principle-grid p {
+    margin: 18px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    line-height: 1.1;
+  }
+
+  @media (max-width: 920px) {
+    .about-hero__grid,
+    .principle-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

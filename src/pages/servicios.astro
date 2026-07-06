@@ -1,0 +1,137 @@
+---
+import SocialContactActions from "~/components/SocialContactActions.astro";
+import MarketingLayout from "~/layouts/MarketingLayout.astro";
+
+export const prerender = true;
+
+const packages = [
+  ["FEE", "$800.000", "30 dias para diagnostico, narrativa, portal Notion y produccion inicial."],
+  ["FRATO", "$1.500.000", "Community management, historias, publicaciones, sesion foto y programacion."],
+  ["FRATO PRO", "$1.800.000", "Mayor volumen de publicaciones, historias 7 dias y sesion foto ampliada."],
+  ["FRATO PRO MAX", "$3.500.000", "2 redes, pauta Meta Ads, creativos, seguimiento y reporte mensual."],
+];
+
+const services = [
+  "Asesorias y reuniones creativas de marca",
+  "Estrategia de contenido y narrativa",
+  "Gestion de redes sociales",
+  "Produccion profesional foto + video",
+  "Contenido de celular para reels y stories",
+  "Diseno grafico para piezas de marca",
+];
+---
+
+<MarketingLayout title="Servicios - frato">
+  <section class="services-hero">
+    <div class="container grid-2">
+      <div>
+        <h1 class="headline">Servicios con estrategia antes de ejecucion.</h1>
+        <p class="lead">Toda relacion nueva empieza con FEE. Despues definimos si el camino es contenido, gestion, produccion, aliados o un paquete mensual.</p>
+        <SocialContactActions />
+      </div>
+      <div class="service-stack">
+        {services.map((service, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <strong>{service}</strong>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" id="fee">
+    <div class="container packages">
+      {packages.map(([name, price, body]) => (
+        <article>
+          <span>{name}</span>
+          <strong>{price}</strong>
+          <p>{body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</MarketingLayout>
+
+<style>
+  .services-hero {
+    min-height: calc(94vh - 76px);
+    display: grid;
+    align-items: center;
+    padding: clamp(58px, 8vw, 110px) 0;
+  }
+
+  .services-hero h1,
+  .services-hero p {
+    margin: 0 0 24px;
+  }
+
+  .service-stack {
+    display: grid;
+    gap: 10px;
+  }
+
+  .service-stack article {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    padding: 16px;
+    background: rgba(11, 24, 48, 0.72);
+  }
+
+  .service-stack span,
+  .packages span {
+    color: var(--frato-orange);
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+  }
+
+  .service-stack strong {
+    color: rgba(255, 255, 255, 0.86);
+    line-height: 1.25;
+  }
+
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .packages article {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    min-height: 270px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    padding: 24px;
+    background: rgba(11, 24, 48, 0.72);
+  }
+
+  .packages strong {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1;
+  }
+
+  .packages p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 980px) {
+    .packages {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .packages {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

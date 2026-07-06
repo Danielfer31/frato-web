@@ -1,0 +1,157 @@
+---
+const coreTeam = [
+  {
+    name: "Felipe Garzon Giron",
+    role: "Fundador y director creativo",
+    body: "Estrategia, narrativa, relaciones y direccion general.",
+  },
+  {
+    name: "Rosa Isabel Alvarez Vergara",
+    role: "Operacion y entregables",
+    body: "Orden, seguimiento y sostenimiento del proceso creativo.",
+  },
+];
+
+const collaborators = [
+  "Creador/a de contenido",
+  "Meta Ads",
+  "OOH e influencers",
+  "Audiovisual",
+  "Web y apps",
+  "Medios locales",
+];
+---
+
+<div class="crew-system">
+  <div class="crew-system__core">
+    {coreTeam.map((person, index) => (
+      <article class="crew-card">
+        <div class="crew-card__portrait">
+          <span>{String(index + 1).padStart(2, "0")}</span>
+        </div>
+        <div>
+          <h3>{person.name}</h3>
+          <strong>{person.role}</strong>
+          <p>{person.body}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="collaborator-rail" aria-label="Red de colaboradores">
+    {collaborators.map((collaborator) => (
+      <article>
+        <span></span>
+        <strong>{collaborator}</strong>
+        <small>Espacio para imagen y credito</small>
+      </article>
+    ))}
+  </div>
+</div>
+
+<style>
+  .crew-system {
+    display: grid;
+    gap: 18px;
+  }
+
+  .crew-system__core {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .crew-card,
+  .collaborator-rail article {
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    background: rgba(11, 24, 48, 0.74);
+  }
+
+  .crew-card {
+    display: grid;
+    gap: 18px;
+    padding: 14px;
+  }
+
+  .crew-card__portrait {
+    aspect-ratio: 4 / 5;
+    display: grid;
+    place-items: end start;
+    border: 1px dashed rgba(255, 255, 255, 0.24);
+    border-radius: 8px;
+    padding: 18px;
+    background:
+      radial-gradient(circle at 70% 18%, rgba(230, 95, 64, 0.22), transparent 12rem),
+      rgba(5, 15, 35, 0.72);
+  }
+
+  .crew-card__portrait span {
+    color: var(--frato-orange);
+    font-size: 0.74rem;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+  }
+
+  .crew-card h3 {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1;
+  }
+
+  .crew-card strong {
+    display: block;
+    margin-top: 10px;
+    color: var(--frato-orange);
+  }
+
+  .crew-card p {
+    margin: 12px 0 0;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.55;
+  }
+
+  .collaborator-rail {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(150px, 1fr));
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .collaborator-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .collaborator-rail article {
+    display: grid;
+    gap: 10px;
+    min-height: 160px;
+    align-content: end;
+    padding: 14px;
+  }
+
+  .collaborator-rail span {
+    width: 42px;
+    height: 42px;
+    border: 1px dashed rgba(255, 255, 255, 0.32);
+    border-radius: 50%;
+  }
+
+  .collaborator-rail strong {
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.2;
+  }
+
+  .collaborator-rail small {
+    color: rgba(255, 255, 255, 0.52);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 760px) {
+    .crew-system__core {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

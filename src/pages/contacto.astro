@@ -1,0 +1,113 @@
+---
+import SocialContactActions from "~/components/SocialContactActions.astro";
+import MarketingLayout from "~/layouts/MarketingLayout.astro";
+
+export const prerender = true;
+---
+
+<MarketingLayout title="Contacto - frato">
+  <section class="contact-hero">
+    <div class="container contact-grid">
+      <div>
+        <h1 class="headline">Agenda una reunion creativa.</h1>
+        <p class="lead">Cuentanos que marca estas construyendo y que necesitas entender antes de producir. Si prefieres algo directo, entra por WhatsApp o mira el trabajo en Instagram.</p>
+        <SocialContactActions />
+      </div>
+      <form>
+        <label>Nombre<input name="name" autocomplete="name" /></label>
+        <label>Email<input name="email" type="email" autocomplete="email" /></label>
+        <label>Marca<input name="brand" /></label>
+        <label>
+          Servicio de interes
+          <select name="service">
+            <option>FEE</option>
+            <option>Paquete mensual</option>
+            <option>Produccion</option>
+            <option>Aliados</option>
+            <option>Portafolio / caso</option>
+          </select>
+        </label>
+        <label>Mensaje<textarea name="message" rows="5"></textarea></label>
+        <label class="consent"><input type="checkbox" /> Autorizo el tratamiento de mis datos personales.</label>
+        <a class="btn btn-primary" href="https://wa.me/573021114427?text=Hola%20frato%2C%20quiero%20agendar%20una%20reunion%20creativa" target="_blank" rel="noopener noreferrer">Enviar por WhatsApp</a>
+      </form>
+    </div>
+  </section>
+</MarketingLayout>
+
+<style>
+  .contact-hero {
+    min-height: calc(100vh - 76px);
+    display: grid;
+    align-items: center;
+    padding: clamp(58px, 8vw, 110px) 0;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.75fr);
+    gap: clamp(30px, 7vw, 90px);
+    align-items: start;
+  }
+
+  .contact-grid h1,
+  .contact-grid p {
+    margin: 0 0 24px;
+  }
+
+  form {
+    display: grid;
+    gap: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    padding: clamp(20px, 4vw, 30px);
+    background:
+      radial-gradient(circle at 78% 14%, rgba(230, 95, 64, 0.16), transparent 12rem),
+      rgba(11, 24, 48, 0.72);
+  }
+
+  label {
+    display: grid;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.9rem;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(5, 15, 35, 0.82);
+    color: var(--frato-white);
+    padding: 12px 14px;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 2px solid rgba(230, 95, 64, 0.52);
+    outline-offset: 2px;
+  }
+
+  .consent {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .consent input {
+    width: auto;
+  }
+
+  form .btn {
+    width: 100%;
+  }
+
+  @media (max-width: 880px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

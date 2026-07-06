@@ -1,0 +1,362 @@
+---
+import CaseGallery from "~/components/CaseGallery.astro";
+import SocialContactActions from "~/components/SocialContactActions.astro";
+import CurationBoard from "~/components/CurationBoard.astro";
+import type { CaseStudy } from "~/data/cases";
+import { getCaseMedia } from "~/data/caseMedia";
+
+interface Props {
+  caseStudy: CaseStudy;
+}
+
+const { caseStudy } = Astro.props;
+const media = getCaseMedia(caseStudy.slug);
+const heroPhoto = media.find((m) => m.type === "photo")?.src;
+---
+
+<article class="case-study-page" style={`--case-accent: ${caseStudy.accent}`}>
+  <section class="case-hero">
+    <div class="container case-hero__grid">
+      <div>
+        <a class="case-back" href="/portafolio">Volver al portafolio</a>
+        <h1>{caseStudy.name}</h1>
+        <p>{caseStudy.summary}</p>
+        <div class="case-hero__meta">
+          <span>{caseStudy.sector}</span>
+          <span>{caseStudy.logo ? "Identidad cargada" : caseStudy.authorized ? "Material autorizado" : "Pendiente de autorizacion de logos"}</span>
+        </div>
+        <SocialContactActions compact />
+      </div>
+      <div
+        class:list={["case-hero__media", { "case-hero__media--photo": heroPhoto, "case-hero__media--logo": !heroPhoto && caseStudy.logo }]}
+        style={heroPhoto ? `background-image: linear-gradient(160deg, color-mix(in srgb, var(--case-accent) 30%, transparent), rgba(5,15,35,0.4)), url('${heroPhoto}')` : undefined}
+      >
+        {heroPhoto ? (
+          caseStudy.logo && <img class="case-hero__logo" src={caseStudy.logo} alt={`Logo ${caseStudy.name}`} />
+        ) : caseStudy.logo ? (
+          <img src={caseStudy.logo} alt={`Logo ${caseStudy.name}`} />
+        ) : (
+          <>
+            <span>{caseStudy.name}</span>
+            <small>Espacio para imagen principal de identidad/trabajo</small>
+          </>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container case-story">
+      <div class="case-story__nav" aria-label="Estructura del caso">
+        <a href="#contexto">Contexto</a>
+        <a href="#reto">Reto</a>
+        <a href="#trabajo">Trabajo</a>
+        <a href="#evidencia">Evidencia</a>
+      </div>
+      <div class="case-story__content">
+        <section id="contexto">
+          <p class="eyeless-label">Contexto</p>
+          <h2>Una ficha lista para material real.</h2>
+          <p>{caseStudy.summary}</p>
+        </section>
+        <section id="reto">
+          <p class="eyeless-label">Reto</p>
+          <h2>Lo que habia que resolver.</h2>
+          <p>{caseStudy.challenge}</p>
+        </section>
+        <section id="trabajo">
+          <p class="eyeless-label">Trabajo de frato</p>
+          <h2>Lo que se puede mostrar sin inventar evidencia.</h2>
+          <ul>
+            {caseStudy.work.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+        <section id="evidencia">
+          <p class="eyeless-label">Evidencia</p>
+          <h2>Publicaciones y espacios pendientes.</h2>
+          <ul>
+            {caseStudy.evidence.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="headline">Galeria de trabajo.</h2>
+        <p>Fotos y reels publicos de la marca, curados por desempeno y reproducibles aqui mismo.</p>
+      </div>
+      <CaseGallery slug={caseStudy.slug} />
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="headline">Ruta de curaduria.</h2>
+        <p>La ficha separa identidad, Instagram, banco visual y evidencia para que el caso crezca con material real.</p>
+      </div>
+      <CurationBoard />
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container instagram-proof">
+      <div>
+        <p class="eyeless-label">Instagram curado</p>
+        <h2>Material publico relacionado.</h2>
+      </div>
+      <div class="instagram-links">
+        {caseStudy.instagramLinks.map((link) => (
+          <a href={link.url} target="_blank" rel="noopener noreferrer">
+            <span>{link.type}</span>
+            <strong>{link.label}</strong>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</article>
+
+<style>
+  .case-study-page {
+    background:
+      radial-gradient(circle at 78% 10%, color-mix(in srgb, var(--case-accent) 18%, transparent), transparent 26rem),
+      var(--frato-bg);
+  }
+
+  .case-hero {
+    min-height: calc(100vh - 76px);
+    display: grid;
+    align-items: center;
+    padding-block: clamp(58px, 8vw, 110px);
+  }
+
+  .case-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1fr);
+    gap: clamp(28px, 7vw, 90px);
+    align-items: center;
+  }
+
+  .case-back {
+    display: inline-flex;
+    margin-bottom: 28px;
+    color: var(--case-accent);
+    font-size: 0.84rem;
+    font-weight: 850;
+  }
+
+  .case-hero h1 {
+    margin: 0;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.94;
+  }
+
+  .case-hero p {
+    max-width: 620px;
+    margin: 24px 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    line-height: 1.65;
+  }
+
+  .case-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 26px 0;
+  }
+
+  .case-hero__meta span {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.84rem;
+  }
+
+  .case-hero__media {
+    min-height: min(62vh, 620px);
+    display: grid;
+    align-content: end;
+    gap: 12px;
+    border: 1px dashed rgba(255, 255, 255, 0.26);
+    border-radius: 8px;
+    padding: clamp(22px, 4vw, 42px);
+    background:
+      linear-gradient(150deg, color-mix(in srgb, var(--case-accent) 22%, transparent), transparent 45%),
+      rgba(11, 24, 48, 0.78);
+  }
+
+  .case-hero__media--logo {
+    place-content: center;
+    place-items: center;
+    border-style: solid;
+  }
+
+  .case-hero__media--photo {
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.18);
+    background-size: cover !important;
+    background-position: center !important;
+    place-content: end;
+    place-items: end;
+  }
+
+  .case-hero__media--photo .case-hero__logo {
+    max-width: min(46%, 220px);
+    max-height: 30%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.6));
+  }
+
+  .case-hero__media--logo img {
+    max-width: min(70%, 360px);
+    max-height: 60%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    mix-blend-mode: screen;
+  }
+
+  .case-hero__media span {
+    max-width: 90%;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 850;
+    line-height: 0.96;
+  }
+
+  .case-hero__media small {
+    color: var(--case-accent);
+    font-size: 0.8rem;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .case-story {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: clamp(28px, 7vw, 96px);
+    align-items: start;
+  }
+
+  .case-story__nav {
+    position: sticky;
+    top: 104px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .case-story__nav a {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 12px;
+    color: rgba(255, 255, 255, 0.68);
+  }
+
+  .case-story__nav a:hover {
+    border-color: var(--case-accent);
+    color: var(--frato-white);
+  }
+
+  .case-story__content {
+    display: grid;
+    gap: 22px;
+  }
+
+  .case-story__content section {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    padding-top: 26px;
+    scroll-margin-top: 110px;
+  }
+
+  .case-story__content h2 {
+    max-width: 780px;
+    margin: 0;
+    font-size: clamp(2rem, 4.5vw, 4.2rem);
+    line-height: 0.98;
+  }
+
+  .case-story__content p:not(.eyeless-label),
+  .case-story__content li {
+    max-width: 760px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 1.04rem;
+    line-height: 1.7;
+  }
+
+  .case-story__content ul {
+    display: grid;
+    gap: 12px;
+    margin: 22px 0 0;
+    padding-left: 20px;
+  }
+
+  .section-head p {
+    max-width: 480px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.66);
+    line-height: 1.65;
+  }
+
+  .instagram-proof {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(320px, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .instagram-proof h2 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1;
+  }
+
+  .instagram-links {
+    display: grid;
+    gap: 12px;
+  }
+
+  .instagram-links a {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    padding: 14px;
+    background: rgba(11, 24, 48, 0.62);
+  }
+
+  .instagram-links span {
+    color: var(--case-accent);
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .instagram-links strong {
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  @media (max-width: 920px) {
+    .case-hero__grid,
+    .case-story,
+    .instagram-proof {
+      grid-template-columns: 1fr;
+    }
+
+    .case-story__nav {
+      position: static;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      overflow-x: auto;
+    }
+  }
+</style>

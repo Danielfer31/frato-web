@@ -1,0 +1,500 @@
+---
+import BrandCarousel from "~/components/BrandCarousel.astro";
+import BrandLogo from "~/components/BrandLogo.astro";
+import BrandMarquee from "~/components/BrandMarquee.astro";
+import CrewGrid from "~/components/CrewGrid.astro";
+import SocialContactActions from "~/components/SocialContactActions.astro";
+import MarketingLayout from "~/layouts/MarketingLayout.astro";
+import { featuredCases } from "~/data/cases";
+
+const campaigns = [
+  {
+    brand: "Roble",
+    sector: "Gastronomia",
+    title: "Reels de temporada y narrativa de cocina",
+    deliverables: ["Reels", "Foto producto", "Notion editorial"],
+  },
+  {
+    brand: "Caribu",
+    sector: "Hoteleria",
+    title: "Identidad audiovisual del hotel boutique",
+    deliverables: ["Video institucional", "Feed", "Guion"],
+  },
+  {
+    brand: "Mar Brasas",
+    sector: "Gastronomia",
+    title: "Lanzamiento de carta y experiencia parrilla",
+    deliverables: ["Campana Meta Ads", "Reels", "Pauta"],
+  },
+  {
+    brand: "Mandato",
+    sector: "Construccion",
+    title: "Storytelling de obra y ventas inmobiliarias",
+    deliverables: ["Video drone", "Casos", "Pauta"],
+  },
+];
+
+export const prerender = true;
+
+const principles = [
+  ["01", "Pensamos antes de producir", "La estrategia ordena cada decision visible antes de grabar, pautar o disenar."],
+  ["02", "Creamos narrativa, no relleno", "Cada pieza debe mover una historia, no solo llenar un calendario."],
+  ["03", "La organizacion tambien crea", "FEE, Notion y procesos claros hacen que la creatividad no dependa del caos."],
+  ["04", "Sabemos decir no", "Filtramos proyectos para cuidar la calidad del trabajo y la relacion con cada cliente."],
+];
+
+---
+
+<MarketingLayout>
+  <section class="home-video" aria-label="Video de inicio de frato">
+    <div class="home-video__frame">
+      <video
+        class="home-video__media"
+        src="/assets/video/frato-inicio.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+      ></video>
+      <a class="home-video__cue" href="#inicio-frato" aria-label="Ir al contenido principal">
+        <span></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="hero-lab" id="inicio-frato">
+    <div class="container hero-lab__stack">
+      <div class="hero-lab__copy reveal-in">
+        <h1 class="display">Narrativa estrategica para marcas con vision.</h1>
+        <p class="lead">No trabajamos con marcas. Trabajamos con personas.</p>
+      </div>
+
+      <div class="btn-row hero-lab__actions">
+        <a class="btn btn-primary" href="/contacto">Agendar reunion creativa</a>
+        <a class="btn btn-secondary" href="#marcas-aliadas">Conoce nuestras marcas aliadas</a>
+      </div>
+
+    </div>
+
+    <div class="container hero-lab__proof">
+      <span>+30 marcas en la matriz</span>
+      <span>6 casos priorizados</span>
+      <span>WhatsApp e Instagram conectados</span>
+    </div>
+  </section>
+
+  <section class="section-tight manifesto">
+    <div class="container manifesto__inner">
+      <h2 class="headline">Narrativa estrategica para marcas con vision</h2>
+    </div>
+  </section>
+
+  <div id="marcas-aliadas">
+    <BrandMarquee />
+  </div>
+
+  <section class="section-tight campaigns" id="campanas">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyeless-label">Campanas trabajadas</p>
+          <h2 class="headline">Producciones reales con marcas reales.</h2>
+        </div>
+        <a class="btn btn-secondary" href="/portafolio">Ver portafolio completo</a>
+      </div>
+      <div class="campaign-grid">
+        {campaigns.map((c) => (
+          <article class="campaign-card">
+            <header>
+              <span class="campaign-sector">{c.sector}</span>
+              <strong class="campaign-brand">{c.brand}</strong>
+            </header>
+            <p class="campaign-title">{c.title}</p>
+            <ul class="campaign-tags">
+              {c.deliverables.map((d) => <li>{d}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <BrandCarousel cases={featuredCases} />
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="headline">Principios que ordenan el trabajo.</h2>
+        <a class="btn btn-secondary" href="/nosotros">Leer filosofia</a>
+      </div>
+      <div class="rule-list">
+        {principles.map(([number, title, body]) => (
+          <article class="rule-item">
+            <strong>{number}</strong>
+            <div>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section services-band">
+    <div class="container services-lab">
+      <div>
+        <p class="eyeless-label">Fase Inicial Estrategica</p>
+        <h2 class="headline">Todo empieza con 30 dias de claridad.</h2>
+        <p class="lead">FEE es la entrada para clientes nuevos: diagnostico, target, narrativa, pilares, portal Notion, estrategia tentativa y primeras grabaciones.</p>
+      </div>
+      <div class="fee-panel">
+        <span>$800.000 COP</span>
+        <strong>Pago unico anticipado</strong>
+        <ol>
+          <li><b>Dias 1-15</b> Estructuracion de marca y narrativa.</li>
+          <li><b>Dias 16-30</b> Produccion inicial, banco de contenido y revision.</li>
+        </ol>
+        <a class="btn btn-primary" href="/servicios#fee">Ver servicios</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight crew-strip">
+    <div class="container section-head">
+      <div>
+        <p class="eyeless-label">Crew y red</p>
+        <h2 class="headline">La confianza tambien tiene rostro.</h2>
+      </div>
+      <a class="btn btn-secondary" href="/crew">Conocer el crew</a>
+    </div>
+    <div class="container">
+      <CrewGrid />
+    </div>
+  </section>
+
+  <section class="section final-cta">
+    <div class="container final-cta__panel">
+      <BrandLogo />
+      <h2 class="headline">Empezamos entendiendo. Despues, producimos.</h2>
+      <SocialContactActions />
+    </div>
+  </section>
+</MarketingLayout>
+
+<style>
+  .home-video {
+    position: relative;
+    min-height: calc(100vh - 76px);
+    display: grid;
+    align-items: stretch;
+    padding: 0;
+    overflow: hidden;
+    background: var(--frato-bg);
+  }
+
+  .home-video::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 34vh;
+    pointer-events: none;
+    z-index: 3;
+    background: linear-gradient(180deg, transparent, rgba(25, 25, 25, 0.72) 58%, var(--frato-bg));
+  }
+
+  .home-video__frame {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-height: calc(100vh - 76px);
+    background: var(--frato-bg);
+  }
+
+  .home-video__frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 50% 48%, transparent 36%, rgba(25, 25, 25, 0.18) 68%, rgba(25, 25, 25, 0.62) 100%),
+      linear-gradient(180deg, rgba(25, 25, 25, 0.28), transparent 22%, transparent 58%, rgba(25, 25, 25, 0.48));
+  }
+
+  .home-video__frame::after {
+    content: "";
+    position: absolute;
+    inset: clamp(14px, 2.2vw, 28px);
+    z-index: 2;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  .home-video__media {
+    width: 100%;
+    height: calc(100vh - 76px);
+    min-height: 560px;
+    display: block;
+    object-fit: cover;
+    background: var(--frato-black);
+  }
+
+  .home-video__cue {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(24px, 5vw, 58px);
+    z-index: 4;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    background: rgba(25, 25, 25, 0.36);
+    transform: translateX(-50%);
+    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+  }
+
+  .home-video__cue:hover {
+    border-color: rgba(230, 95, 64, 0.8);
+    background: rgba(230, 95, 64, 0.14);
+    transform: translateX(-50%) translateY(-2px);
+  }
+
+  .home-video__cue span {
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid rgba(255, 255, 255, 0.8);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px) rotate(45deg);
+  }
+
+  .hero-lab {
+    min-height: calc(100vh - 76px);
+    display: grid;
+    align-content: center;
+    gap: 28px;
+    padding: clamp(48px, 6vw, 80px) 0 28px;
+    overflow: hidden;
+  }
+
+  .hero-lab__stack {
+    display: grid;
+    gap: clamp(24px, 3.5vw, 40px);
+    align-content: end;
+  }
+
+  .hero-lab__copy {
+    display: grid;
+    gap: 18px;
+    max-width: 920px;
+  }
+
+  .hero-lab__copy h1,
+  .hero-lab__copy p {
+    margin: 0;
+  }
+
+  .hero-lab__actions {
+    justify-content: center;
+  }
+
+  .campaigns {
+    background: var(--frato-bg);
+  }
+
+  .campaign-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: clamp(22px, 3vw, 36px);
+  }
+
+  .campaign-card {
+    display: grid;
+    gap: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 20px;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(230, 95, 64, 0.08), transparent 60%),
+      rgba(11, 24, 48, 0.55);
+    transition: border-color 220ms ease, transform 220ms ease;
+  }
+
+  .campaign-card:hover {
+    border-color: rgba(230, 95, 64, 0.45);
+    transform: translateY(-2px);
+  }
+
+  .campaign-card header {
+    display: grid;
+    gap: 4px;
+  }
+
+  .campaign-sector {
+    color: var(--frato-orange);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .campaign-brand {
+    color: rgba(255, 255, 255, 0.94);
+    font-size: 1.4rem;
+  }
+
+  .campaign-title {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.5;
+  }
+
+  .campaign-tags {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .campaign-tags li {
+    font-size: 0.74rem;
+    padding: 4px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .hero-lab__proof {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    border-top: 1px solid var(--frato-line);
+    padding-top: 18px;
+  }
+
+  .hero-lab__proof span {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.92rem;
+  }
+
+  .manifesto {
+    background: var(--frato-orange);
+    color: #120804;
+  }
+
+  .manifesto__inner {
+    display: flex;
+    justify-content: center;
+  }
+
+  .manifesto .headline {
+    max-width: 1040px;
+    margin: 0;
+    color: inherit;
+    text-align: center;
+  }
+
+  .services-band {
+    background: var(--frato-bg);
+  }
+
+  .services-lab {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+    gap: clamp(30px, 7vw, 90px);
+    align-items: start;
+  }
+
+  .services-lab h2,
+  .services-lab p {
+    margin: 0;
+  }
+
+  .fee-panel {
+    display: grid;
+    gap: 22px;
+    border-left: 1px solid rgba(230, 95, 64, 0.58);
+    padding: 8px 0 8px 34px;
+  }
+
+  .fee-panel span {
+    color: var(--frato-orange);
+    font-size: clamp(2.5rem, 5vw, 4.8rem);
+    font-weight: 850;
+    line-height: 0.9;
+  }
+
+  .fee-panel strong {
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  .fee-panel ol {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding-left: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.55;
+  }
+
+  .fee-panel .btn {
+    justify-self: start;
+  }
+
+  .crew-strip {
+    background: var(--frato-bg);
+  }
+
+  .final-cta {
+    text-align: center;
+  }
+
+  .final-cta__panel {
+    display: grid;
+    justify-items: center;
+    gap: 24px;
+    border-top: 1px solid var(--frato-line);
+    padding-top: clamp(38px, 6vw, 70px);
+  }
+
+  .final-cta__panel > img {
+    width: min(190px, 52vw);
+  }
+
+  @media (max-width: 900px) {
+    .home-video {
+      min-height: auto;
+      padding: 0;
+    }
+
+    .home-video__media {
+      height: min(72vh, 620px);
+      min-height: 420px;
+    }
+
+    .hero-lab {
+      min-height: auto;
+      align-content: start;
+    }
+
+    .hero-lab__grid,
+    .services-lab,
+    .hero-lab__proof {
+      grid-template-columns: 1fr;
+    }
+
+    .fee-panel {
+      border-left: 0;
+      border-top: 1px solid rgba(230, 95, 64, 0.58);
+      padding: 28px 0 0;
+    }
+  }
+</style>

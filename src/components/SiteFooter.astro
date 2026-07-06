@@ -1,0 +1,81 @@
+---
+import BrandLogo from "~/components/BrandLogo.astro";
+import SocialContactActions from "~/components/SocialContactActions.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="footer-logo" href="/" aria-label="frato inicio">
+        <BrandLogo />
+      </a>
+      <p>Monteria, Colombia. Hermandad creativa desde 2023.</p>
+      <SocialContactActions compact />
+    </div>
+    <div class="footer-links">
+      <a href="/servicios">Servicios</a>
+      <a href="/portafolio">Portafolio</a>
+      <a href="/nosotros">Nosotros</a>
+      <a href="/crew">Crew</a>
+      <a href="/contacto">Contacto</a>
+    </div>
+    <div class="footer-small">
+      <span>© {year} frato</span>
+      <span>Logo oficial bloqueado al manual de marca.</span>
+      <a href="/legal/privacidad">Privacidad</a>
+      <a href="/legal/terminos">Terminos</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--frato-line);
+    padding: 44px 0;
+    background: #030a18;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr 0.9fr;
+    gap: 32px;
+  }
+
+  .footer-logo {
+    display: inline-flex;
+    width: 120px;
+    margin-bottom: 18px;
+  }
+
+  p,
+  a,
+  span {
+    color: rgba(255, 255, 255, 0.64);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  p {
+    max-width: 340px;
+    margin: 0 0 18px;
+  }
+
+  .footer-links,
+  .footer-small {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+  }
+
+  a:hover {
+    color: var(--frato-orange);
+  }
+
+  @media (max-width: 760px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

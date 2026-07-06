@@ -1,0 +1,90 @@
+---
+import { contentPipeline } from "~/data/contentPipeline";
+---
+
+<div class="curation-board">
+  {contentPipeline.map((step, index) => (
+    <article class="curation-card" data-status={step.status}>
+      <span>{String(index + 1).padStart(2, "0")}</span>
+      <div>
+        <strong>{step.title}</strong>
+        <p>{step.body}</p>
+      </div>
+      <ul>
+        {step.items.map((item) => <li>{item}</li>)}
+      </ul>
+    </article>
+  ))}
+</div>
+
+<style>
+  .curation-board {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .curation-card {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    min-height: 300px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    padding: 18px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.012)),
+      rgba(11, 24, 48, 0.74);
+  }
+
+  .curation-card[data-status="locked"] {
+    border-color: rgba(230, 95, 64, 0.44);
+  }
+
+  .curation-card[data-status="ready"] {
+    border-color: rgba(125, 164, 255, 0.38);
+  }
+
+  .curation-card > span {
+    color: var(--frato-orange);
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+  }
+
+  .curation-card strong {
+    display: block;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: clamp(1.2rem, 2vw, 1.75rem);
+    line-height: 1;
+  }
+
+  .curation-card p {
+    margin: 12px 0 0;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  .curation-card ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding-left: 18px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 1020px) {
+    .curation-board {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .curation-board {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

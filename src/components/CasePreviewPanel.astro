@@ -1,0 +1,130 @@
+---
+import type { CaseStudy } from "~/data/cases";
+
+interface Props {
+  cases: CaseStudy[];
+}
+
+const { cases } = Astro.props;
+---
+
+<div class="case-preview-stack">
+  {cases.map((caseStudy, index) => (
+    <article
+      class:list={["case-preview", { "is-active": index === 0 }]}
+      id={`case-panel-${caseStudy.slug}`}
+      role="tabpanel"
+      aria-labelledby={`case-tab-${caseStudy.slug}`}
+      aria-hidden={index === 0 ? "false" : "true"}
+      tabindex={index === 0 ? "0" : "-1"}
+      inert={index === 0 ? undefined : true}
+      data-case-panel={caseStudy.slug}
+      style={`--case-accent: ${caseStudy.accent}`}
+    >
+      <div class="case-preview__top">
+        <span>{caseStudy.sector}</span>
+        <a href={`/portafolio/${caseStudy.slug}`}>Explorar caso</a>
+      </div>
+      <h3>{caseStudy.name}</h3>
+      <p>{caseStudy.summary}</p>
+      <dl>
+        <div>
+          <dt>Reto</dt>
+          <dd>{caseStudy.challenge}</dd>
+        </div>
+        <div>
+          <dt>Evidencia</dt>
+          <dd>{caseStudy.evidence[0]}</dd>
+        </div>
+      </dl>
+    </article>
+  ))}
+</div>
+
+<style>
+  .case-preview-stack {
+    position: relative;
+    min-height: 440px;
+  }
+
+  .case-preview {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: space-between;
+    gap: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    padding: clamp(22px, 3vw, 34px);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--case-accent) 18%, transparent), transparent 42%),
+      rgba(5, 15, 35, 0.92);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(18px);
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+
+  .case-preview.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .case-preview__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .case-preview__top span,
+  .case-preview dt {
+    color: var(--case-accent);
+    font-size: 0.74rem;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .case-preview__top a {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 0.86rem;
+    font-weight: 800;
+  }
+
+  .case-preview h3 {
+    margin: 0;
+    font-size: clamp(2.4rem, 5vw, 5rem);
+    line-height: 1;
+  }
+
+  .case-preview p {
+    margin: 0;
+    max-width: 560px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1.04rem;
+    line-height: 1.65;
+  }
+
+  .case-preview dl {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+  }
+
+  .case-preview dd {
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 760px) {
+    .case-preview-stack {
+      min-height: 520px;
+    }
+  }
+</style>

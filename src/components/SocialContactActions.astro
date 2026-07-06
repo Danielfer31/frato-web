@@ -1,0 +1,96 @@
+---
+import { INSTAGRAM_URL, WHATSAPP_URL } from "~/data/cases";
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<div class:list={["social-actions", { "social-actions--compact": compact }]}>
+  <a class="social-action social-action--primary" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp">
+    <span class="social-icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.001 3.2c-7.07 0-12.8 5.73-12.8 12.8 0 2.255.59 4.456 1.71 6.398L3.2 28.8l6.55-1.72a12.76 12.76 0 0 0 6.25 1.595h.005c7.07 0 12.8-5.73 12.8-12.8 0-3.42-1.332-6.633-3.75-9.052A12.717 12.717 0 0 0 16.001 3.2zm0 23.32h-.004a10.61 10.61 0 0 1-5.408-1.48l-.388-.23-3.886 1.02 1.038-3.79-.253-.39a10.6 10.6 0 0 1-1.628-5.65c0-5.866 4.774-10.64 10.64-10.64 2.842 0 5.512 1.107 7.521 3.117a10.572 10.572 0 0 1 3.117 7.526c0 5.866-4.774 10.64-10.64 10.64zm5.83-7.974c-.32-.16-1.89-.933-2.184-1.04-.293-.107-.506-.16-.72.16-.213.32-.825 1.04-1.012 1.253-.187.213-.373.24-.693.08-.32-.16-1.35-.498-2.572-1.587-.95-.848-1.592-1.895-1.779-2.215-.187-.32-.02-.493.14-.652.144-.143.32-.373.48-.56.16-.187.213-.32.32-.534.107-.213.053-.4-.027-.56-.08-.16-.72-1.733-.986-2.373-.26-.624-.524-.539-.72-.549l-.613-.011a1.18 1.18 0 0 0-.853.4c-.293.32-1.12 1.094-1.12 2.667 0 1.573 1.146 3.094 1.306 3.307.16.213 2.257 3.446 5.467 4.83.764.33 1.36.527 1.825.674.767.244 1.465.21 2.017.127.615-.092 1.89-.772 2.157-1.518.267-.747.267-1.387.187-1.518-.08-.13-.293-.213-.613-.373z"/>
+      </svg>
+    </span>
+    <strong>Escribir por WhatsApp</strong>
+  </a>
+  <a class="social-action" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Ver Instagram">
+    <span class="social-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
+        <path d="M16 11.37a4 4 0 1 1-7.914 1.117 4 4 0 0 1 7.914-1.117z"/>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      </svg>
+    </span>
+    <strong>Ver Instagram</strong>
+  </a>
+</div>
+
+<style>
+  .social-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .social-action {
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--frato-line);
+    border-radius: 8px;
+    padding: 0 14px;
+    color: rgba(255, 255, 255, 0.86);
+    transition: border-color 180ms ease, color 180ms ease, transform 180ms ease, background 180ms ease;
+  }
+
+  .social-action:hover {
+    border-color: rgba(230, 95, 64, 0.72);
+    color: var(--frato-white);
+    transform: translateY(-2px);
+  }
+
+  .social-action--primary {
+    background: var(--frato-orange);
+    border-color: var(--frato-orange);
+    color: #160703;
+  }
+
+  .social-action--primary:hover {
+    color: #160703;
+    background: #ff714f;
+  }
+
+  .social-icon {
+    display: inline-grid;
+    width: 22px;
+    height: 22px;
+    place-items: center;
+    color: currentColor;
+  }
+
+  .social-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .social-action strong {
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .social-actions--compact .social-action {
+    min-height: 38px;
+    padding-inline: 10px;
+  }
+
+  .social-actions--compact .social-action strong {
+    display: none;
+  }
+</style>

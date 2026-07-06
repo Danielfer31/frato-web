@@ -1,0 +1,408 @@
+---
+import { featuredCases } from "~/data/cases";
+import { getCaseMedia } from "~/data/caseMedia";
+
+type Frame = {
+  brand: string;
+  sector: string;
+  slug: string;
+  kind: "reel" | "foto" | "pending";
+  src?: string;
+  poster?: string;
+};
+
+// Build the strip from real curated media: top reel + top photo per case.
+const frames: Frame[] = [];
+for (const c of featuredCases) {
+  const media = getCaseMedia(c.slug);
+  const reel = media.find((m) => m.type === "reel");
+  const photo = media.find((m) => m.type === "photo");
+  if (reel) {
+    frames.push({ brand: c.name, sector: c.sector, slug: c.slug, kind: "reel", src: reel.src, poster: reel.poster });
+  }
+  if (photo) {
+    frames.push({ brand: c.name, sector: c.sector, slug: c.slug, kind: "foto", src: photo.src });
+  }
+  if (!reel && !photo) {
+    frames.push({ brand: c.name, sector: c.sector, slug: c.slug, kind: "pending" });
+  }
+}
+
+const playIcon =
+  '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5c0-.9 1-1.5 1.8-1l9 6.5c.7.5.7 1.5 0 2l-9 6.5c-.8.5-1.8-.1-1.8-1V5.5z"/></svg>';
+
+// Track is duplicated so the loop resets seamlessly (clone is identical).
+const loopFrames = [...frames, ...frames];
+const realCount = frames.length;
+---
+
+<div class="filmstrip" data-filmstrip data-real-count={realCount} aria-label="Narrativa visual de frato">
+  <div class="filmstrip__viewport" data-strip-viewport>
+    <div class="filmstrip__track">
+      {loopFrames.map((frame, index) => {
+        const isClone = index >= realCount;
+        const cls = ["frame", `frame--${frame.kind}`];
+        const inner = (
+          <>
+            {frame.kind === "reel" && frame.src && (
+              <video
+                class="frame__media"
+                src={frame.src}
+                poster={frame.poster}
+                muted
+                loop
+                playsinline
+                preload="none"
+                tabindex="-1"
+              ></video>
+            )}
+            {frame.kind === "foto" && frame.src && (
+              <img class="frame__media" src={frame.src} alt={`${frame.brand} — pieza de contenido`} loading="lazy" decoding="async" />
+            )}
+            {frame.kind === "reel" && (
+              <span class="frame__play" set:html={playIcon} />
+            )}
+            <span class="frame__scrim"></span>
+            <span class="frame__tag">{frame.kind === "reel" ? "Reel" : frame.kind === "foto" ? "Foto" : "Pendiente"}</span>
+            <span class="frame__sector">{frame.sector}</span>
+            <strong class="frame__name">{frame.brand}</strong>
+          </>
+        );
+
+        return frame.kind === "pending" ? (
+          <div
+            class:list={cls}
+            role="img"
+            aria-label={`${frame.brand} — espacio para material aprobado`}
+            aria-hidden={isClone ? "true" : undefined}
+          >
+            {inner}
+          </div>
+        ) : (
+          <a
+            class:list={cls}
+            href={`/portafolio/${frame.slug}`}
+            aria-label={`Ver caso ${frame.brand}`}
+            aria-hidden={isClone ? "true" : undefined}
+            tabindex={isClone ? -1 : undefined}
+            data-has-video={frame.kind === "reel" ? "true" : undefined}
+          >
+            {inner}
+          </a>
+        );
+      })}
+    </div>
+  </div>
+
+  <div class="filmstrip__foot">
+    <div
+      class="filmstrip__progress"
+      data-strip-scrub
+      role="slider"
+      tabindex="0"
+      aria-label="Posicion del carrusel"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+    >
+      <i data-strip-fill></i>
+    </div>
+    <span class="filmstrip__hint">desliza o pasa el cursor para reproducir</span>
+  </div>
+</div>
+
+<script>
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Play reels on hover/focus, pause on leave — keeps perf good vs autoplaying all.
+  document.querySelectorAll<HTMLElement>("[data-has-video]").forEach((card) => {
+    const video = card.querySelector<HTMLVideoElement>("video");
+    if (!video) return;
+    const play = () => {
+      video.play().catch(() => {});
+    };
+    const stop = () => {
+      video.pause();
+    };
+    card.addEventListener("pointerenter", play);
+    card.addEventListener("focus", play);
+    card.addEventListener("pointerleave", stop);
+    card.addEventListener("blur", stop);
+  });
+
+  document.querySelectorAll<HTMLElement>("[data-filmstrip]").forEach((strip) => {
+    const viewport = strip.querySelector<HTMLElement>("[data-strip-viewport]");
+    const track = strip.querySelector<HTMLElement>(".filmstrip__track");
+    const scrub = strip.querySelector<HTMLElement>("[data-strip-scrub]");
+    const fill = strip.querySelector<HTMLElement>("[data-strip-fill]");
+    const realCount = Number(strip.dataset.realCount || 0);
+    if (!viewport || !track || !scrub || !fill) return;
+
+    let loopLen = 1;
+    const measure = () => {
+      const clone = track.children[realCount] as HTMLElement | undefined;
+      loopLen = clone ? clone.offsetLeft : Math.max(1, viewport.scrollWidth / 2);
+    };
+
+    const render = () => {
+      const frac = ((viewport.scrollLeft % loopLen) + loopLen) % loopLen / loopLen;
+      fill.style.width = `${Math.max(6, frac * 100)}%`;
+      scrub.setAttribute("aria-valuenow", String(Math.round(frac * 100)));
+    };
+
+    viewport.addEventListener("scroll", render, { passive: true });
+    window.addEventListener("resize", () => {
+      measure();
+      render();
+    });
+    measure();
+    render();
+
+    const seekToClientX = (clientX: number) => {
+      const rect = scrub.getBoundingClientRect();
+      const frac = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+      viewport.scrollTo({ left: frac * loopLen, behavior: "smooth" });
+    };
+
+    let dragging = false;
+    scrub.addEventListener("pointerdown", (e) => {
+      dragging = true;
+      scrub.setPointerCapture(e.pointerId);
+      seekToClientX(e.clientX);
+    });
+    scrub.addEventListener("pointermove", (e) => {
+      if (dragging) seekToClientX(e.clientX);
+    });
+    scrub.addEventListener("pointerup", () => (dragging = false));
+    scrub.addEventListener("pointercancel", () => (dragging = false));
+
+    scrub.addEventListener("keydown", (e) => {
+      const step = loopLen * 0.1;
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        viewport.scrollBy({ left: step, behavior: "smooth" });
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        viewport.scrollBy({ left: -step, behavior: "smooth" });
+      }
+    });
+
+    // Auto-advance: continuous, seamless infinite loop. Pauses while hovering
+    // (so the user can watch a reel) and during a drag.
+    let last = 0;
+    const SPEED = 28;
+    let hovering = false;
+    strip.addEventListener("pointerenter", () => (hovering = true));
+    strip.addEventListener("pointerleave", () => (hovering = false));
+
+    const tick = (now: number) => {
+      if (last === 0) last = now;
+      const dt = (now - last) / 1000;
+      last = now;
+
+      if (!dragging && !hovering && !document.hidden) {
+        let next = viewport.scrollLeft + SPEED * dt;
+        if (next >= loopLen) next -= loopLen;
+        viewport.scrollLeft = next;
+      }
+      requestAnimationFrame(tick);
+    };
+
+    if (!reduceMotion) {
+      requestAnimationFrame(tick);
+    }
+  });
+</script>
+
+<style>
+  .filmstrip {
+    display: grid;
+    gap: 14px;
+  }
+
+  .filmstrip__viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: 14px;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+  }
+
+  .filmstrip__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filmstrip__track {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+  }
+
+  .frame {
+    flex: 0 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: clamp(320px, 52vh, 460px);
+    aspect-ratio: 9 / 16;
+    padding: 14px;
+    border: 1px solid var(--frato-line);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1), border-color 260ms ease, box-shadow 320ms ease;
+  }
+
+  .frame__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .frame__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(5, 15, 35, 0.05) 35%, rgba(5, 15, 35, 0.82) 100%);
+  }
+
+  .frame--pending {
+    background: linear-gradient(160deg, rgba(125, 164, 255, 0.24), rgba(11, 24, 48, 0.92));
+  }
+
+  .filmstrip:hover .frame {
+    transform: scale(1.03);
+  }
+
+  .filmstrip .frame:hover {
+    transform: scale(1.07);
+    border-color: rgba(230, 95, 64, 0.6);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+
+  a.frame:focus-visible {
+    transform: scale(1.07);
+    border-color: rgba(230, 95, 64, 0.6);
+    outline: 2px solid var(--frato-orange);
+    outline-offset: 3px;
+  }
+
+  .frame__play {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--frato-orange);
+    color: #160703;
+    box-shadow: 0 4px 14px rgba(230, 95, 64, 0.45);
+  }
+
+  .frame__play :global(svg) {
+    width: 15px;
+    height: 15px;
+    margin-left: 2px;
+  }
+
+  .frame__tag {
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    z-index: 2;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.56rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .frame__sector {
+    position: relative;
+    z-index: 2;
+    color: var(--frato-orange);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .frame__name {
+    position: relative;
+    z-index: 2;
+    margin-top: 2px;
+    font-size: 0.96rem;
+    font-weight: 800;
+    line-height: 1.05;
+  }
+
+  .filmstrip__foot {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .filmstrip__progress {
+    position: relative;
+    flex: 1;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    touch-action: none;
+  }
+
+  .filmstrip__progress::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--frato-line);
+  }
+
+  .filmstrip__progress i {
+    position: relative;
+    height: 3px;
+    width: 6%;
+    border-radius: 999px;
+    background: var(--frato-orange);
+    transition: width 120ms linear;
+  }
+
+  .filmstrip__progress:hover i,
+  .filmstrip__progress:focus-visible i {
+    height: 5px;
+  }
+
+  .filmstrip__progress:focus-visible {
+    outline: 2px solid var(--frato-orange);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  .filmstrip__hint {
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .frame {
+      transition-duration: 320ms !important;
+    }
+  }
+</style>

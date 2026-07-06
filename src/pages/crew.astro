@@ -1,0 +1,70 @@
+---
+import CrewGrid from "~/components/CrewGrid.astro";
+import SocialContactActions from "~/components/SocialContactActions.astro";
+import MarketingLayout from "~/layouts/MarketingLayout.astro";
+
+export const prerender = true;
+---
+
+<MarketingLayout title="Crew - frato">
+  <section class="crew-hero">
+    <div class="container grid-2">
+      <div>
+        <h1 class="headline">Las personas detras del proceso.</h1>
+        <p class="lead">frato vende criterio, compania y ejecucion. Por eso el crew aparece como sistema humano: equipo interno, creador/a de contenido y aliados externos.</p>
+        <SocialContactActions />
+      </div>
+      <div class="crew-hero__frame">
+        <span>Fotos reales pendientes</span>
+        <strong>Espacios listos para colaboradores</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <CrewGrid />
+    </div>
+  </section>
+</MarketingLayout>
+
+<style>
+  .crew-hero {
+    min-height: calc(86vh - 76px);
+    display: grid;
+    align-items: end;
+    padding: clamp(58px, 8vw, 110px) 0;
+  }
+
+  .crew-hero h1,
+  .crew-hero p {
+    margin: 0 0 24px;
+  }
+
+  .crew-hero__frame {
+    min-height: 480px;
+    display: grid;
+    align-content: end;
+    gap: 14px;
+    border: 1px dashed rgba(255, 255, 255, 0.24);
+    border-radius: 8px;
+    padding: clamp(22px, 4vw, 36px);
+    background:
+      radial-gradient(circle at 76% 22%, rgba(230, 95, 64, 0.2), transparent 13rem),
+      rgba(11, 24, 48, 0.74);
+  }
+
+  .crew-hero__frame span {
+    color: var(--frato-orange);
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .crew-hero__frame strong {
+    max-width: 520px;
+    font-size: clamp(2.4rem, 5vw, 5rem);
+    line-height: 0.92;
+  }
+</style>

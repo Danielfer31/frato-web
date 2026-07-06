@@ -1,0 +1,29 @@
+---
+interface Props {
+  variant?: "lockup" | "bulb";
+  class?: string;
+  alt?: string;
+}
+
+const {
+  variant = "lockup",
+  class: className = "",
+  alt = "frato",
+} = Astro.props;
+
+const src =
+  variant === "bulb"
+    ? "/assets/brand/frato-isotipo-bombillo-dark.png"
+    : "/assets/brand/frato-logo-monocromo.png";
+---
+
+<img class:list={["brand-logo-lock", className]} src={src} alt={alt} />
+
+<style>
+  .brand-logo-lock {
+    mix-blend-mode: screen;
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

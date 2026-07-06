@@ -1,0 +1,25 @@
+---
+import CaseStudyTemplate from "~/components/CaseStudyTemplate.astro";
+import MarketingLayout from "~/layouts/MarketingLayout.astro";
+import { featuredCases, getCaseBySlug } from "~/data/cases";
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return featuredCases.map((caseStudy) => ({
+    params: { slug: caseStudy.slug },
+    props: { slug: caseStudy.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const caseStudy = getCaseBySlug(slug);
+
+if (!caseStudy) {
+  return Astro.redirect("/portafolio");
+}
+---
+
+<MarketingLayout title={`${caseStudy.name} - caso frato`}>
+  <CaseStudyTemplate caseStudy={caseStudy} />
+</MarketingLayout>

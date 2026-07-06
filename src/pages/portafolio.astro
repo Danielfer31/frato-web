@@ -1,0 +1,182 @@
+---
+import BrandCarousel from "~/components/BrandCarousel.astro";
+import CurationBoard from "~/components/CurationBoard.astro";
+import HeroFilmstrip from "~/components/HeroFilmstrip.astro";
+import MediaRail from "~/components/MediaRail.astro";
+import MarketingLayout from "~/layouts/MarketingLayout.astro";
+import { brandInventory } from "~/data/brandInventory";
+import { featuredCases } from "~/data/cases";
+
+export const prerender = true;
+
+const priorityBrands = brandInventory.filter((brand) => brand.priority);
+---
+
+<MarketingLayout title="Portafolio - frato">
+  <section class="portfolio-hero">
+    <div class="container portfolio-hero__grid">
+      <div>
+        <h1 class="headline">Casos que deben probar criterio, no solo estetica.</h1>
+        <p class="lead">El portafolio queda armado como sistema de evidencia: marcas priorizadas, material de Instagram curado y espacios para fotos, reels, historias, resultados y testimonios aprobados.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight portfolio-filmstrip" aria-label="Narrativa visual de portafolio">
+    <div class="container">
+      <HeroFilmstrip />
+    </div>
+  </section>
+
+  <BrandCarousel cases={featuredCases} />
+
+  <section class="section-tight">
+    <div class="container section-head">
+      <h2 class="headline">Sistema para cargar evidencia real.</h2>
+      <p class="asset-note">Asi queda preparada la entrada de fotos, reels, historias, colaboradores, resultados y testimonios sin cambiar el logo oficial ni publicar material sin permiso.</p>
+    </div>
+    <div class="container">
+      <CurationBoard />
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container section-head">
+      <h2 class="headline">Inventario priorizado.</h2>
+      <p class="asset-note">Referencia tomada de la lamina de marcas del PDF de servicios y del playbook. Estado legal: pendiente hasta confirmacion.</p>
+    </div>
+    <div class="container inventory-grid">
+      {priorityBrands.map((brand) => (
+        <article>
+          <span>{brand.sector}</span>
+          <h3>{brand.name}</h3>
+          <p>{brand.source}</p>
+          <small>{brand.authorization === "approved" ? "Autorizado" : "Pendiente de autorizacion"}</small>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container case-index">
+      {featuredCases.map((caseStudy) => (
+        <article style={`--case-accent: ${caseStudy.accent}`}>
+          <div>
+            <span>{caseStudy.sector}</span>
+            <h2>{caseStudy.name}</h2>
+            <p>{caseStudy.summary}</p>
+          </div>
+          <MediaRail caseStudy={caseStudy} compact />
+          <a class="btn btn-secondary" href={`/portafolio/${caseStudy.slug}`}>Abrir caso</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</MarketingLayout>
+
+<style>
+  .portfolio-hero {
+    min-height: calc(82vh - 76px);
+    display: grid;
+    align-items: end;
+    padding: clamp(58px, 8vw, 110px) 0;
+  }
+
+  .portfolio-hero__grid {
+    max-width: 980px;
+  }
+
+  .portfolio-hero h1,
+  .portfolio-hero p {
+    margin: 0;
+  }
+
+  .inventory-grid span,
+  .case-index span {
+    color: var(--frato-orange);
+    font-size: 0.74rem;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .section-head p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.64);
+    line-height: 1.55;
+  }
+
+  .portfolio-filmstrip {
+    padding-top: 0;
+  }
+
+  .inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .inventory-grid article {
+    display: grid;
+    align-content: end;
+    min-height: 220px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    padding: 20px;
+    background: rgba(11, 24, 48, 0.72);
+  }
+
+  .inventory-grid h3 {
+    margin: 18px 0 10px;
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    line-height: 1;
+  }
+
+  .inventory-grid p,
+  .inventory-grid small {
+    color: rgba(255, 255, 255, 0.62);
+    line-height: 1.5;
+  }
+
+  .case-index {
+    display: grid;
+    gap: 20px;
+  }
+
+  .case-index article {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(360px, 1fr) auto;
+    gap: clamp(18px, 4vw, 42px);
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+    padding-top: 28px;
+  }
+
+  .case-index h2 {
+    margin: 14px 0 12px;
+    font-size: clamp(2.2rem, 5vw, 4.8rem);
+    line-height: 0.9;
+  }
+
+  .case-index p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.66);
+    line-height: 1.62;
+  }
+
+  @media (max-width: 980px) {
+    .case-index article {
+      grid-template-columns: 1fr;
+    }
+
+    .inventory-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 620px) {
+    .inventory-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
